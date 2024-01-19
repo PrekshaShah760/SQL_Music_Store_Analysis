@@ -1,0 +1,142 @@
+
+MUSIC STORE ANALYSIS IN SQL:-
+
+
+1. create table employee
+
+create table Employee(
+employee_id int8 PRIMARY KEY,
+last_name varchar(50) not null,
+first_name varchar(50),
+title varchar(50),
+reports_to varchar(50),
+levels varchar(50),	
+birthdate Date,	
+hire_date Date,
+address varchar(50),
+city varchar(50),
+state varchar(50),
+country varchar(50),
+postal_code int8,
+phone varchar(50),
+fax varchar(50),
+email varchar(50)
+)
+
+2. create table customer
+
+create table Customer(
+customer_id int8 PRIMARY KEY,
+first_name varchar(50) not null,
+last_name varchar(50),
+company varchar(50),
+address varchar(50),
+city varchar(50),
+state varchar(50),
+country varchar(50),
+postal_code varchar(50),
+phone varchar(50),
+fax varchar(50),
+email varchar(50),
+support_rep_id int REFERENCES Employee(employee_id)
+)
+
+3.create table Artist
+
+create table Artist(
+artist_id int8 PRIMARY KEY,
+name varchar(50) not null
+)
+
+4.create table Album
+
+create table Album(
+album_id int8 PRIMARY KEY,
+title varchar(50) not null,
+artist_id int REFERENCES Artist(artist_id)
+)
+
+5.create table invoice
+
+create table Invoice(
+invoice_id int8 PRIMARY KEY,
+customer_id int REFERENCES Customer(customer_id),
+invoice_date Date,
+billing_address varchar(50),
+billing_city varchar(50),
+billing_state varchar(50),
+billing_country varchar(50),
+billing_postal_code varchar(50),
+total numeric(10, 2)
+)
+
+
+6.create table media_type
+
+create table media_type(
+media_type_id int PRIMARY KEY,
+name varchar(50) not null
+)
+
+7.create table genere_type
+
+create table genere(
+genere_id int PRIMARY KEY,
+name varchar(50) not null
+)
+
+
+8.create table track
+
+CREATE TABLE track (
+    track_id int8 PRIMARY KEY,
+    name varchar(255) NOT NULL,
+    album_id int REFERENCES Album(album_id),
+    media_type_id int REFERENCES media_type(media_type_id),
+    genre_id int REFERENCES genere(genere_id),
+    composer varchar(255),
+    milliseconds int,
+    bytes int,
+    unit_price numeric(10, 2) NOT NULL
+);
+
+9. create table invoice_line
+
+CREATE TABLE invoice_line (
+    invoice_line_id int8 PRIMARY KEY,
+    invoice_id int REFERENCES Invoice(invoice_id),
+    track_id int REFERENCES track(track_id),
+    unit_price numeric(10, 2) NOT NULL,
+    quantity int NOT NULL
+);
+
+
+10. create table playlist
+
+create table playlist(
+playlist_id int PRIMARY KEY,
+name varchar(50) not null
+)
+
+11.create table playlist_track
+
+CREATE TABLE playlist_track (
+    playlist_id int REFERENCES playlist(playlist_id),
+    track_id int REFERENCES track(track_id),
+    PRIMARY KEY (playlist_id, track_id)
+);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
